@@ -1,9 +1,10 @@
 extends layout
 
 block content
-  h1= title
-  p Publish to SNS
+  h1 Publish to SNS
   form(role="form" action="/publish" method="post" class="publish--form")
     div
-      textarea(name="message", cols="30", rows="10")
+      div
+        label(for="message") Message body
+      textarea(name="message" id="message" cols="30" rows="10")
     button(type="submit") Send

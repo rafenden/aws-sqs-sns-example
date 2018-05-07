@@ -5,33 +5,32 @@ const util = require('util');
 
 const config = require('../config');
 
-router.get('/', (req, res, next) => {
-  res.render('publish');
-});
-
-router.post('/', (req, res) => {
-  
+router.get('/', function (req, res, next) {
   AWS.config.update({
     accessKeyId: config.aws.accessKeyId,
     secretAccessKey: config.aws.secretAccessKey,
     region: config.aws.region,
   });
-  
-  const sns = new AWS.SNS();
-  
-  const publishParams = {
-    TopicArn: config.aws.snsTopicArn,
-    Message: req.body.message,
+
+  const sqs = new AWS.SQS();
+
+  const receiveMessageParams = {
+    QueueUrl: config.aws.sqsQueueUrl,
+    MaxNumberOfMessages: 10,
   };
 
-  sns.publish(publishParams, (err, data) => {
+  const messages = [];
+
+  sqs.receiveMessage(receiveMessageParams, (err, data) => {
     if (err) {
       console.error(err);
-      res.status(500).end();
+      res.status(500);
+      next(err);
     }
     else {
       console.log(data);
-      res.redirect('/publish');
+
+      res.render('receive', { messages: data.Messages });
     }
   });
 });
