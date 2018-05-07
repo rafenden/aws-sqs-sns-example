@@ -1,9 +1,12 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const AWS = require('aws-sdk');
+const util = require('util');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+const config = require('../config');
+
+router.get('/', function (req, res, next) {
+  res.render('index');
 });
 
 module.exports = router;
