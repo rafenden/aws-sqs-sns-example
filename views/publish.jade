@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1= title
+  p Publish to SNS
+  form(role="form" action="/publish" method="post" class="publish--form")
+    div
+      textarea(name="message", cols="30", rows="10")
+    button(type="submit") Send
