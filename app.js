@@ -6,7 +6,6 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
-const publishRouter = require('./routes/publish');
 
 const app = express();
 const server = require('http').Server(app);
